@@ -111,6 +111,7 @@ function defineRefPropWarningGetter(props, displayName) {
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   const element = {
     // This tag allows us to uniquely identify this as a React Element
+    // 通过Symbol 创建一个表示为react element 的独特的标志 
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
@@ -160,7 +161,6 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
       Object.freeze(element);
     }
   } */
-
   return element;
 };
 
@@ -170,7 +170,6 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
  */
 export function createElement(type, config, children) {
   let propName;
-
   // Reserved names are extracted
   const props = {};
 
@@ -184,7 +183,7 @@ export function createElement(type, config, children) {
       ref = config.ref;
     }
     if (hasValidKey(config)) {
-      key = '' + config.key;
+      key = '' + config.key; // 转换key为string
     }
 
     self = config.__self === undefined ? null : config.__self;
@@ -193,7 +192,7 @@ export function createElement(type, config, children) {
     for (propName in config) {
       if (
         hasOwnProperty.call(config, propName) &&
-        !RESERVED_PROPS.hasOwnProperty(propName)
+        !RESERVED_PROPS.hasOwnProperty(propName) // 去掉已经保存下来的ref,key,_self,_source
       ) {
         props[propName] = config[propName];
       }
@@ -222,7 +221,7 @@ export function createElement(type, config, children) {
   if (type && type.defaultProps) {
     const defaultProps = type.defaultProps;
     for (propName in defaultProps) {
-      if (props[propName] === undefined) {
+      if (props[propName] === undefined) { // 如果props里面没有定义，则添加该props
         props[propName] = defaultProps[propName];
       }
     }
@@ -252,7 +251,7 @@ export function createElement(type, config, children) {
     ref,
     self,
     source,
-    ReactCurrentOwner.current,
+    ReactCurrentOwner.current, // 默认为null，定义了该属性的flow type 检查为null或为Fiber type
     props,
   );
 }
