@@ -8,10 +8,15 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.71.0"
   },
   "dependencies": {
+    "fbjs": "^0.8.16",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-reconciler": "^0.10.0",
+    "shared": "^0.2.0"
   }
 }
